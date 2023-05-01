@@ -1507,6 +1507,66 @@ router.get('/game/tebakgambar', async (req, res, next) => {
     limitAdd(apikey);
 })
 
+router.get('/game/susunkata', async (req, res, next) => {
+    var apikey = req.query.apikey
+    var text = req.query.page
+    if (!apikey) return res.json(loghandler.noapikey)
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    fetch(encodeURI(`https://raw.githubusercontent.com/AlipBot/data-rest-api/main/susunkata.json`))
+        .then(response => response.json())
+        .then(data => {
+            var result = data;
+            var result = data[Math.floor(Math.random() * data.length)];
+            res.json({
+                result
+            })
+        })
+        .catch(e => {
+            console.log(e);
+            res.json(loghandler.error)
+        })
+    limitAdd(apikey);
+})
+router.get('/game/tebakkata', async (req, res, next) => {
+    var apikey = req.query.apikey
+    var text = req.query.page
+    if (!apikey) return res.json(loghandler.noapikey)
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    fetch(encodeURI(`https://raw.githubusercontent.com/AlipBot/data-rest-api/main/tebakkata.json`))
+        .then(response => response.json())
+        .then(data => {
+            var resu = data;
+            var result = resu[Math.floor(Math.random() * resu.length)];
+            res.json({
+                result
+            })
+        })
+        .catch(e => {
+            console.log(e);
+            res.json(loghandler.error)
+        })
+    limitAdd(apikey);
+})
 // other
 router.get('/other/github-stalk', async (req, res, next) => {
     var apikey = req.query.apikey
