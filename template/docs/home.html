@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.c">
+        <meta name="viewport" content="width-device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+        <link rel="icon" type="image/png" sizes="16x16" href="../img/gbt.png">
+
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Situs web REST API yang menyediakan berbagai macam Api untuk mengembangkan aplikasimu.">
+    <meta name="robots" content="archive, follow, imageindex, index, odp, snippet, translate">
+    <meta name="author" content="Gbt`Yanz">
+    <title> GbtYanz - REST APIs</title>
+    <meta property="og:site_name" name="og:site_name" content="GbtYanz - REST APIs">
+    <meta property="og:title" name="og:title" content="GbtYanz - REST APIs">
+    <meta property="og:url" name="og:url" content="gabutyanz.xyz">
+    <meta property="og:image" name="og:image" content="img/user.png">
+    <meta property="og:description" name="og:description" content="Situs web REST API yang menyediakan berbagai macam fitur untuk mengembangkan aplikasimu.">
+    </head>
+    <style>
+    *{
+      margin: 0;
+      font-family: Ubuntu, sans-serif;
+    }
+      body{
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+      video{
+        width: 390px;
+        height: 690px;
+        display: none;
+      }
+      .a{
+		    position: static;
+    	}
+    	.b{
+		  position: absolute;
+		  width: 100%;
+		  height: 100%;
+		  left: 0px;
+		  top: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      transition: 0.5s;
+  	}
+.text {
+    position: absolute
+}
+.status {
+    position: relative;
+    animation: animetop .8s
+}
+.readdocs {
+    position: relative;
+    animation: animebot .8s;
+    text-align: center
+}
+@keyframes animetop {
+    0% {
+        top: -200px;
+        opacity: 0
+    }
+    100% {
+        top: 0;
+        opacity: 1
+    }
+}
+@keyframes animebot {
+    0% {
+        top: 200px;
+        opacity: 0
+    }
+    100% {
+        top: 0;
+        opacity: 1
+    }
+}
+p {
+    color: rgba(255, 255, 255, .8);
+    letter-spacing: .15em;
+    font-size: 15px!important;
+    font-weight: 600
+}
+a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, .5)
+}
+a.sosmed {
+    color: rgba(255, 255, 255, .8)
+}
+a:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1)
+}
+.typed-text {
+    color: #0f0
+}
+.cursor {
+    overflow: hidden;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation: typing 1.5s steps(40, end), blink-caret .75s step-end infinite
+}
+@keyframes typing {
+    from {
+        width: 0
+    }
+    to {
+        width: 100%
+    }
+}
+@keyframes blink-caret {
+    from,
+    to {
+        border-color: transparent
+    }
+    50% {
+        border-color: orange
+    }
+}
+hr {
+    margin: 10px auto;
+    position: relative;
+    background: rgba(255, 255, 255, .5);
+    width: 80%;
+    height: 2px
+}
+.bottom {
+    position: fixed;
+    left: 50%;
+    bottom: 50px;
+    transform: translate(-50%, -50%);
+    margin: 0 auto
+}
+    </style>
+    <body>
+      <div class="container">
+        <div class="a">
+        <video id="myVideo">
+          <source src="../video/vid.mp4" type="video/mp4">
+        </video>
+        </div>
+        <div class="b">
+          <div class="text">
+        <div class="status">
+            <p>STATUS : <span class="typed-text"></span><span class="cursor typing"></span></p>
+        </div>
+        <hr>
+        <div class="readdocs">
+            <p>OPEN <a href="/docs" class="docs">DOCS.</a></p>
+        </div>
+    </div>
+    <div class="bottom">
+        <p>
+            <a href="http://instagram.com/gabutyanz" rel="noopener noreferrer" class="sosmed"><i class="mdi mdi-instagram"></i> Instagram</a>
+        </p>
+    </div>
+        </div>
+      </div>
+      <script>
+      var vid = document.getElementById("myVideo");
+      function play(){
+              vid.play();  
+                        }
+      
+            var today = new Date();var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear()+'.';var dateTime = date;
+                        const swals = Swal.mixin({
+                            allowOutsideClick: false,
+                        });
+                        async function mulai(){
+                                await swals.fire('Hallo');
+                                setTimeout(showDiv, 400);vid.play();             
+                        }
+                        mulai();
+            function showDiv() {
+              document.getElementById("myVideo").style.display='block';
+            }
+            
+            const typedTextSpan = document.querySelector(".typed-text"),
+    textArray = ["ACTIVE~", "ONLINE~"],
+    typingDelay = 200,
+    erasingDelay = 100,
+    newTextDelay = 2e3;
+let textArrayIndex = 0,
+    charIndex = 0;
+
+function type() { charIndex < textArray[textArrayIndex].length ? (typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex), charIndex++, setTimeout(type, 200)) : setTimeout(erase, 2e3) }
+
+function erase() { charIndex > 0 ? (typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1), charIndex--, setTimeout(erase, 100)) : (textArrayIndex++, textArrayIndex >= textArray.length && (textArrayIndex = 0), setTimeout(type, 1300)) }
+document.addEventListener("DOMContentLoaded", (function() { setTimeout(type, 2250) }));
+
+$(document).ready((function() {
+    $(".changeprofile").submit((function(e) {
+        var formObj, formURL = $(this).attr("action"),
+            formData = new FormData(this);
+        $.ajax({ url: formURL, type: "POST", data: formData, contentType: !1, cache: !1, processData: !1, beforeSend: function() { $("button").attr("disabled", "disabled"), $("input").attr("disabled", "disabled"), $("a").attr("disabled", "disabled"), $(".inibutton").html('<i class="fas fa-spinner fa-spin"></i> Wait') }, success: function(data) { data.includes("Success") ? ($("button").removeAttr("disabled", "disabled"), $("a").removeAttr("disabled", "disabled"), $("input").removeAttr("disabled", "disabled"), $(".inibutton").html("Save"), $.notify({ icon: "tim-icons icon-check-2", message: data }, { type: "success", timer: 3e3, placement: { from: "top", align: "right" } }), window.location = window.location) : ($("button").removeAttr("disabled", "disabled"), $("a").removeAttr("disabled", "disabled"), $("input").removeAttr("disabled", "disabled"), $(".inibutton").html("Save"), $.notify({ icon: "tim-icons icon-simple-remove", message: data }, { type: "danger", timer: 3e3, placement: { from: "top", align: "right" } })) } }), e.preventDefault()
+    }))
+}))
+            </script>
+    </body>
+  <script src="src/images/script.js"></script>
+</html>
