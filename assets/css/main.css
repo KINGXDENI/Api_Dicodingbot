@@ -23,7 +23,12 @@
 
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
-
+:root {
+  --primary: #EB1616;
+  --secondary: #191C24;
+  --light: #6C7293;
+  --dark: #000000;
+}
 * {
   margin: 0px;
   padding: 0px;
@@ -32,7 +37,7 @@
 
 body,
 html {
-  background-color: #343a40 !important;
+  background-color: var(--secondary);
   height: 100%;
   font-family: Poppins-Regular, sans-serif;
 }
@@ -217,11 +222,12 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
+  background-color: var(--secondary);
 }
 
 .wrap-login100 {
   width: 960px;
-  background: #abc4aa;
+  background: var(--light);
   border-radius: 10px;
   overflow: hidden;
 
