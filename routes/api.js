@@ -27,7 +27,10 @@ const {
     cekKey,
     checkLimit
 } = require('../MongoDB/function');
-
+const {
+    Configuration,
+    OpenAIApi
+} = require('openai');
 const scr = require('@bochilteam/scraper')
 const {
     color,
@@ -1525,7 +1528,6 @@ router.get('/game/susunkata', async (req, res, next) => {
     fetch(encodeURI(`https://raw.githubusercontent.com/AlipBot/data-rest-api/main/susunkata.json`))
         .then(response => response.json())
         .then(data => {
-            var result = data;
             var result = data[Math.floor(Math.random() * data.length)];
             res.json({
                 result
@@ -1537,6 +1539,7 @@ router.get('/game/susunkata', async (req, res, next) => {
         })
     limitAdd(apikey);
 })
+
 router.get('/game/tebakkata', async (req, res, next) => {
     var apikey = req.query.apikey
     var text = req.query.page
@@ -1567,7 +1570,117 @@ router.get('/game/tebakkata', async (req, res, next) => {
         })
     limitAdd(apikey);
 })
+
+router.get('/game/tebaklagu', async (req, res, next) => {
+    var apikey = req.query.apikey
+    var text = req.query.page
+    if (!apikey) return res.json(loghandler.noapikey)
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    fetch(encodeURI(`https://raw.githubusercontent.com/AlipBot/data-rest-api/main/tebaklagu.json`))
+        .then(response => response.json())
+        .then(data => {
+            var resu = data;
+            var result = resu[Math.floor(Math.random() * resu.length)];
+            res.json({
+                result
+            })
+        })
+        .catch(e => {
+            console.log(e);
+            res.json(loghandler.error)
+        })
+    limitAdd(apikey);
+})
+router.get('/game/tebaklirik', async (req, res, next) => {
+    var apikey = req.query.apikey
+    var text = req.query.page
+    if (!apikey) return res.json(loghandler.noapikey)
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    fetch(encodeURI(`https://raw.githubusercontent.com/AlipBot/data-rest-api/main/tebaklirik.json`))
+        .then(response => response.json())
+        .then(data => {
+            var resu = data;
+            var result = resu[Math.floor(Math.random() * resu.length)];
+            res.json({
+                result
+            })
+        })
+        .catch(e => {
+            console.log(e);
+            res.json(loghandler.error)
+        })
+    limitAdd(apikey);
+})
+
 // other
+
+const configuration = new Configuration({
+    apiKey: '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',
+});
+
+const openai = new OpenAIApi(configuration);
+
+router.get('/other/chatai', async (req, res, next) => {
+    var apikey = req.query.apikey
+    var text = req.query.query
+    if (!apikey) return res.json(loghandler.noapikey)
+    if (!text) return res.json({
+        status: false,
+        creator: `${creator}`,
+        message: "masukan parameter query"
+    })
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    try {
+        const response = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: `${text}`,
+            temperature: 0,
+            max_tokens: 3000,
+            top_p: 1,
+            frequency_penalty: 0.5,
+            presence_penalty: 0,
+        });
+        res.status(200).json({
+            result: response.data.choices[0].text
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error
+        });
+    }
+    limitAdd(apikey);
+});
 router.get('/other/github-stalk', async (req, res, next) => {
     var apikey = req.query.apikey
     var text = req.query.username
