@@ -27,7 +27,10 @@ const {
     cekKey,
     checkLimit
 } = require('../MongoDB/function');
-
+const {
+    Configuration,
+    OpenAIApi
+} = require('openai');
 const scr = require('@bochilteam/scraper')
 const {
     color,
@@ -1507,7 +1510,438 @@ router.get('/game/tebakgambar', async (req, res, next) => {
     limitAdd(apikey);
 })
 
+router.get('/game/susunkata', async (req, res, next) => {
+    var apikey = req.query.apikey
+    var text = req.query.page
+    if (!apikey) return res.json(loghandler.noapikey)
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    fetch(encodeURI(`https://raw.githubusercontent.com/AlipBot/data-rest-api/main/susunkata.json`))
+        .then(response => response.json())
+        .then(data => {
+            var result = data[Math.floor(Math.random() * data.length)];
+            res.json({
+                result
+            })
+        })
+        .catch(e => {
+            console.log(e);
+            res.json(loghandler.error)
+        })
+    limitAdd(apikey);
+})
+
+router.get('/game/tebakkata', async (req, res, next) => {
+    var apikey = req.query.apikey
+    var text = req.query.page
+    if (!apikey) return res.json(loghandler.noapikey)
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    fetch(encodeURI(`https://raw.githubusercontent.com/AlipBot/data-rest-api/main/tebakkata.json`))
+        .then(response => response.json())
+        .then(data => {
+            var resu = data;
+            var result = resu[Math.floor(Math.random() * resu.length)];
+            res.json({
+                result
+            })
+        })
+        .catch(e => {
+            console.log(e);
+            res.json(loghandler.error)
+        })
+    limitAdd(apikey);
+})
+
+router.get('/game/tebaklagu', async (req, res, next) => {
+    var apikey = req.query.apikey
+    var text = req.query.page
+    if (!apikey) return res.json(loghandler.noapikey)
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    fetch(encodeURI(`https://raw.githubusercontent.com/AlipBot/data-rest-api/main/tebaklagu.json`))
+        .then(response => response.json())
+        .then(data => {
+            var resu = data;
+            var result = resu[Math.floor(Math.random() * resu.length)];
+            res.json({
+                result
+            })
+        })
+        .catch(e => {
+            console.log(e);
+            res.json(loghandler.error)
+        })
+    limitAdd(apikey);
+})
+router.get('/game/tebaklirik', async (req, res, next) => {
+    var apikey = req.query.apikey
+    var text = req.query.page
+    if (!apikey) return res.json(loghandler.noapikey)
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    fetch(encodeURI(`https://raw.githubusercontent.com/AlipBot/data-rest-api/main/tebaklirik.json`))
+        .then(response => response.json())
+        .then(data => {
+            var resu = data;
+            var result = resu[Math.floor(Math.random() * resu.length)];
+            res.json({
+                result
+            })
+        })
+        .catch(e => {
+            console.log(e);
+            res.json(loghandler.error)
+        })
+    limitAdd(apikey);
+})
+
 // other
+
+
+
+const configuration = new Configuration({
+  apiKey: process.env['OPENAI_API_KEY'],
+});
+
+
+const openai = new OpenAIApi(configuration);
+
+router.get('/other/chatai', async (req, res, next) => {
+    var apikey = req.query.apikey
+const mySecret = process.env['undefined']
+    var text = req.query.query
+    if (!apikey) return res.json(loghandler.noapikey)
+    if (!text) return res.json({
+        status: false,
+        creator: `${creator}`,
+        message: "masukan parameter query"
+    })
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    try {
+        const response = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: `${text}`,
+            temperature: 0.1,
+            max_tokens: 3000,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+        });
+        res.status(200).json({
+            result: response.data.choices[0].text.trim()
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error
+        });
+    }
+    limitAdd(apikey);
+});
+
+const userChats = {};
+router.get('/other/chatai2', async (req, res, next) => {
+  var apikey = req.query.apikey
+    var text = req.query.query
+  var userId = req.query.userId;
+    if (!apikey) return res.json(loghandler.noapikey)
+    if (!text) return res.json({
+        status: false,
+        creator: `${creator}`,
+        message: "masukan parameter username"
+    })
+   if (!userId) return res.json({
+        status: false,
+        creator: `${creator}`,
+        message: "masukan parameter UserId[Number]"
+    })
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    const userMessage = text;
+
+    // Periksa apakah userId sudah ada dalam objek userChats
+    if (!userChats[userId]) {
+        // Jika tidak ada, inisialisasikan dengan pesan dari asisten
+        userChats[userId] = {
+            userId,
+            messages: [{
+                role: 'system',
+                content: 'Kamu adalah seorang Babu bernama Dicoding Bot yang bertujuan untuk menjawab pertanyaan saya',
+            }, ],
+        };
+    }
+
+    // Tambahkan pesan pengguna ke dalam riwayat obrolan pengguna
+    userChats[userId].messages.push({
+        role: 'user',
+        content: userMessage,
+    });
+
+    // Kirim pesan ke OpenAI
+    const messages = userChats[userId].messages;
+    try {
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+            model: 'gpt-3.5-turbo',
+            messages,
+            stream: true,
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${process.env['OPENAI_API_KEY']}`,
+            },
+            responseType: 'stream',
+        });
+
+        const readableStream = response.data;
+        let responseData = '';
+
+        readableStream.on('data', (chunk) => {
+            responseData += chunk.toString();
+        });
+
+        readableStream.on('end', () => {
+            const dataStrings = responseData.split('\n');
+            const contentArray = [];
+            dataStrings.forEach((dataString) => {
+                if (dataString && dataString !== 'data: [DONE]') {
+                    try {
+                        const data = JSON.parse(dataString.substring('data: '.length));
+                        const content = data.choices[0].delta.content || '';
+                        contentArray.push(content);
+
+                    } catch (error) {
+                        console.error('Error parsing JSON:', error.message);
+                    }
+                }
+            });
+
+            // Gabungkan konten menjadi satu respons JSON
+            const mergedContent = contentArray.join('');
+            userChats[userId].messages.push({
+                role: 'assistant',
+                content: mergedContent,
+            });
+            console.log(userChats);
+            // Kirim respons JSON dengan konten tergabung
+            res.status(200).json({
+             response: mergedContent,
+                note: `Jangan lupa Untuk Menghapus Riwayat Chat Dengan, https://api.dicodingbot.site/api/clear?apikey=6QUJWgub5P&userId=`
+        })
+        });
+    } catch (error) {
+        console.error('Error:', error.message);
+        res.status(500).json({
+            error: 'Internal Server Error'
+        });
+    }
+    limitAdd(apikey);
+});
+router.get('/other/chatai3', async (req, res, next) => {
+    var apikey = req.query.apikey;
+    var text = req.query.query;
+    var userId = req.query.userId;
+    var previousResponse = req.query.previousresponse; // Tambahkan parameter previousresponse
+
+    if (!apikey) return res.json(loghandler.noapikey);
+    if (!text) return res.json({
+        status: false,
+        creator: `${creator}`,
+        message: "masukan parameter username"
+    });
+    if (!userId) return res.json({
+        status: false,
+        creator: `${creator}`,
+        message: "masukan parameter UserId[Number]"
+    });
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    const userMessage = text;
+
+    // Periksa apakah userId sudah ada dalam objek userChats
+    if (!userChats[userId]) {
+        // Jika tidak ada, inisialisasikan dengan pesan dari asisten
+        userChats[userId] = {
+            userId,
+            messages: [{
+                role: 'system',
+                content: 'Kamu adalah seorang Babu bernama Dicoding Bot yang bertujuan untuk menjawab pertanyaan saya',
+            }, ],
+        };
+    }
+
+    // Tambahkan pesan pengguna ke dalam riwayat obrolan pengguna
+    userChats[userId].messages.push({
+        role: 'user',
+        content: userMessage,
+    });
+
+    // Jika ada previousresponse, tambahkan sebagai pesan asisten sebelumnya
+    if (previousResponse) {
+        userChats[userId].messages.push({
+            role: 'assistant',
+            content: previousResponse,
+        });
+    }
+
+    // Kirim pesan ke OpenAI
+    const messages = userChats[userId].messages;
+    try {
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+            model: 'gpt-3.5-turbo',
+            messages,
+            stream: true,
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${process.env['OPENAI_API_KEY']}`,
+            },
+            responseType: 'stream',
+        });
+
+        const readableStream = response.data;
+        let responseData = '';
+
+        readableStream.on('data', (chunk) => {
+            responseData += chunk.toString();
+        });
+
+        readableStream.on('end', () => {
+            const dataStrings = responseData.split('\n');
+            const contentArray = [];
+            dataStrings.forEach((dataString) => {
+                if (dataString && dataString !== 'data: [DONE]') {
+                    try {
+                        const data = JSON.parse(dataString.substring('data: '.length));
+                        const content = data.choices[0].delta.content || '';
+                        contentArray.push(content);
+
+                    } catch (error) {
+                        console.error('Error parsing JSON:', error.message);
+                    }
+                }
+            });
+
+            // Gabungkan konten menjadi satu respons JSON
+            const mergedContent = contentArray.join('');
+            userChats[userId].messages.push({
+                role: 'assistant',
+                content: mergedContent,
+            });
+            console.log(userChats);
+            // Kirim respons JSON dengan konten tergabung
+            res.status(200).json({
+                response: mergedContent,
+                note: `Jangan lupa Untuk Menghapus Riwayat Chat Dengan, https://api.dicodingbot.site/api/clear?apikey=6QUJWgub5P&userId=`,
+              listchat : userChats[userId],
+            })
+        });
+    } catch (error) {
+        console.error('Error:', error.message);
+        res.status(500).json({
+            error: 'Internal Server Error'
+        });
+    }
+    limitAdd(apikey);
+});
+
+router.get('/clear', async (req, res, next) => {
+    var apikey = req.query.apikey
+    var userId = req.query.userId
+    if (!apikey) return res.json(loghandler.noapikey)
+    if (!userId) return res.json({
+        status: false,
+        creator: `${creator}`,
+        message: "masukan parameter UserId"
+    })
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    if (userChats[userId]) {
+        // Hapus riwayat obrolan pengguna berdasarkan userId
+        delete userChats[userId];
+        res.status(200).json({
+            message: 'Chat history deleted successfully'
+        });
+    } else {
+        res.status(404).json({
+            error: 'User not found'
+        });
+    }
+    limitAdd(apikey);
+});
 router.get('/other/github-stalk', async (req, res, next) => {
     var apikey = req.query.apikey
     var text = req.query.username

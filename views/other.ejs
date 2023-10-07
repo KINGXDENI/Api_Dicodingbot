@@ -21,15 +21,7 @@
 
 <body>
     <div class="container-fluid position-relative d-flex p-0">
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <!-- Spinner End -->
-
-
+      
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
@@ -159,13 +151,40 @@
                                 </tr>
                             </thead>
                             <tbody>
+                              <tr>
+                                    <td>Chat Open AI</td>
+                                    <td>query & apikey</td>
+                                    <td>Online</td>
+                                    <td><a class="btn btn-sm btn-primary" type="button"
+                                            class="text-success btn-sm btn-icons"
+                                            href="api/other/chatai?query=manusia adalah&apikey=<%= apikey %>"
+                                            target="_blank" rel="nofollow" title="Try">Detail</a></td>
+                                </tr>
+                              <tr>
+                                    <td>Chat Open AI2</td>
+                                    <td>query & apikey & UserId</td>
+                                    <td>Online</td>
+                                    <td><a class="btn btn-sm btn-primary" type="button"
+                                            class="text-success btn-sm btn-icons"
+                                            href="api/other/chatai2?query=manusia adalah&apikey=<%= apikey %>&userId=082144323683"
+                                            target="_blank" rel="nofollow" title="Try">Detail</a></td>
+                                </tr>
+                              <tr>
+                                    <td>Chat Open AI3</td>
+                                    <td>query & previousresponse & apikey & UserId</td>
+                                    <td>Online</td>
+                                    <td><a class="btn btn-sm btn-primary" type="button"
+                                            class="text-success btn-sm btn-icons"
+                                            href="api/other/chatai2?query=manusia adalah&previousresponse=&apikey=<%= apikey %>&userId=082144323683"
+                                            target="_blank" rel="nofollow" title="Try">Detail</a></td>
+                                </tr>
                                 <tr>
                                     <td>Github Stalk</td>
                                     <td>username & apikey</td>
                                     <td>Online</td>
                                     <td><a class="btn btn-sm btn-primary" type="button"
                                         class="text-success btn-sm btn-icons"
-                                        href="api/other/github-stalk?username=zeeoneofc&apikey=<%= apikey %>"
+                                        href="api/other/github-stalk?username=KINGXDENI&apikey=<%= apikey %>"
                                         target="_blank"
                                         rel="nofollow"
                                         title="Try">Detail</a></td>
