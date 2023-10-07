@@ -6,22 +6,35 @@
 </head>
 
 <style>
-    .sidebar, html{
-        scrollbar-width:none
-        }
+    .sidebar,
+    html {
+        scrollbar-width: none
+    }
+
     html::-webkit-scrollbar,
-    .element::-webkit-scrollbar{
-        display:none
-        }
+    .element::-webkit-scrollbar {
+        display: none
+    }
+
     .sidebar::-webkit-scrollbar,
-    .element::-webkit-scrollbar{
-        display:none
-        }
+    .element::-webkit-scrollbar {
+        display: none
+    }
 </style>
 
 <body>
     <div class="container-fluid position-relative d-flex p-0">
-              <!-- Sidebar Start -->
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
                 <a href="/docs" class="navbar-brand mx-4 mb-3">
@@ -30,7 +43,9 @@
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
                         <img class="rounded-circle" src="img/user.png" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                        <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                        </div>
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-0">Dicoding Bot</h6>
@@ -40,15 +55,16 @@
                 <div class="navbar-nav w-100">
 
                     <a href="/docs" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    
+
                     <a href="/cecan" class="nav-item nav-link"><i class="fa bi-suit-heart-fill me-2"></i>Cecan</a>
 
-                    <a href="/downloader" class="nav-item nav-link"><i class="fa bi-cloud-download-fill me-2"></i>downloader Api</a>
+                    <a href="/downloader" class="nav-item nav-link"><i
+                            class="fa bi-cloud-download-fill me-2"></i>downloader Api</a>
 
                     <a href="/news" class="nav-item nav-link"><i class="fa bi-receipt-cutoff me-2"></i>News Api</a>
 
                     <a href="/photooxy" class="nav-item nav-link"><i class="fa bi-card-image me-2"></i>Photooxy Api</a>
-                    
+
                     <a href="/search" class="nav-item nav-link"><i class="fa bi-search me-2"></i>Search Api</a>
 
                     <a href="/nsfw" class="nav-item nav-link"><i class="fa bi-suit-heart me-2"></i>Nsfw Api</a>
@@ -62,8 +78,10 @@
                     <div class="nav-item dropdown" style="border-bottom: 1px solid red; margin: 20px 0px 15px 15px;">
                     </div>
 
-                    <a href="https://www.instagram.com/gabutyanz/" class="nav-item nav-link"><i class="fa bi-instagram me-2"></i>Instagram</a>
-                    <a href="https://wa.me/6282144323683" class="nav-item nav-link"><i class="fa bi-whatsapp me-2"></i>Whatsapp</a>
+                    <a href="https://www.instagram.com/gabutyanz/" class="nav-item nav-link"><i
+                            class="fa bi-instagram me-2"></i>Instagram</a>
+                    <a href="https://wa.me/6282144323683" class="nav-item nav-link"><i
+                            class="fa bi-whatsapp me-2"></i>Whatsapp</a>
                     <a href="#" class="nav-item nav-link"><i class="fa bi-github me-2"></i>Github</a>
                 </div>
             </nav>
@@ -111,7 +129,8 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.png" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2" src="img/user.png" alt=""
+                                style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">Dicoding Bot</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
@@ -125,10 +144,10 @@
             <!-- Navbar End -->
 
 
-            
 
 
-            
+
+
 
 
             <!-- Recent Sales Start -->
@@ -142,7 +161,7 @@
                             <thead>
                                 <tr class="text-white">
                                     <th scope="col">API</th>
-                                    
+
                                     <th scope="col">REQUIRE</th>
                                     <th scope="col">STATUS</th>
                                     <th scope="col">GET</th>
@@ -154,11 +173,45 @@
                                     <td>apikey</td>
                                     <td>Online</td>
                                     <td><a class="btn btn-sm btn-primary" type="button"
-                                        class="text-success btn-sm btn-icons"
-                                        href="api/game/tebakgambar?apikey=<%= apikey %>"
-                                        target="_blank"
-                                        rel="nofollow"
-                                        title="Try">Detail</a></td>
+                                            class="text-success btn-sm btn-icons"
+                                            href="api/game/tebakgambar?apikey=<%= apikey %>" target="_blank"
+                                            rel="nofollow" title="Try">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Susun Kata</td>
+                                    <td>apikey</td>
+                                    <td>Online</td>
+                                    <td><a class="btn btn-sm btn-primary" type="button"
+                                            class="text-success btn-sm btn-icons"
+                                            href="api/game/susunkata?apikey=<%= apikey %>" target="_blank"
+                                            rel="nofollow" title="Try">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Tebak Kata</td>
+                                    <td>apikey</td>
+                                    <td>Online</td>
+                                    <td><a class="btn btn-sm btn-primary" type="button"
+                                            class="text-success btn-sm btn-icons"
+                                            href="api/game/tebakkata?apikey=<%= apikey %>" target="_blank"
+                                            rel="nofollow" title="Try">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Tebak Lirik</td>
+                                    <td>apikey</td>
+                                    <td>Online</td>
+                                    <td><a class="btn btn-sm btn-primary" type="button"
+                                            class="text-success btn-sm btn-icons"
+                                            href="api/game/tebaklirik?apikey=<%= apikey %>" target="_blank"
+                                            rel="nofollow" title="Try">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Tebak Lagu</td>
+                                    <td>apikey</td>
+                                    <td>Online</td>
+                                    <td><a class="btn btn-sm btn-primary" type="button"
+                                            class="text-success btn-sm btn-icons"
+                                            href="api/game/tebaklagu?apikey=<%= apikey %>" target="_blank"
+                                            rel="nofollow" title="Try">Detail</a></td>
                                 </tr>
                               <tr>
                                     <td>Susun Kata</td>
@@ -204,10 +257,10 @@
             <!-- Recent Sales End -->
 
 
-            
 
 
-            
+
+
         </div>
     </div>
 
